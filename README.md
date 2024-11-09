@@ -8,7 +8,7 @@ eMET is a tool for building an accurate BMR to help identify cancer drivers in c
 ### 1. Installation
 
 ```bash
-git clone https://github.com/FaridehBahari/BMR.git 
+git clone https://github.com/FaridehBahari/eMET.git 
 ```
 
 ### 2. Prepare Inputs
