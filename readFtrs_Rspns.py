@@ -221,10 +221,10 @@ def load_regulatory_elems(sim_setting):
     path_X_train = sim_setting['path_X_train']
     path_Y_test = sim_setting['path_Y_test']
     path_Y_train = sim_setting['path_Y_train']
-    path_Y_val = sim_setting['path_Y_validate']
+    
     scale = ast.literal_eval(sim_setting['scale'])
     remove_unMutated = ast.literal_eval(sim_setting['remove_unMutated'])
-    split_intergenic = ast.literal_eval(sim_setting['split_intergenic'])
+    
     
     X_train, Y_train, X_test, Y_test = create_TestTrain_TwoSources(path_X_train, 
                                                                path_Y_train, 
