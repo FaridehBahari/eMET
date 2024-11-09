@@ -10,7 +10,6 @@ import pandas as pd
 import numpy as np
 from readFtrs_Rspns import scale_train, scale_test, load_data
 from performance.assessModels import assess_model
-from models.repeated_train_test import save_metrics_summary
 import shutil
 import configparser
 from simulation_settings import load_sim_settings, config_get
