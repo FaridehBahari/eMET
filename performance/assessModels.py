@@ -22,12 +22,8 @@ def read_pred(path_pred):
     Y_pred = pd.read_csv(path_pred, sep = "\t", header=0, index_col='binID',
                          usecols=['binID', 'predRate'])
     # Load the CSV file into a DataFrame
-    df = pd.read_csv('../external/BMR/procInput/ann_PCAWG_ID_complement.csv', sep=',')
-
-    filtered_df = df[(df['in_CGC'] | df['in_CGC_literature'] | df['in_CGC_new'] | df['in_oncoKB'] | df['in_pcawg'])]
-        
-    # Select the 'PCAWG_IDs' column from the filtered DataFrame
-    drivers = filtered_df['PCAWG_IDs']
+    df = pd.read_csv('performance/annotated_IDs.csv', sep=',')
+    drivers = df['IDs']
     Y = Y_pred.loc[~(Y_pred.index).isin(drivers)]
     
     return Y
@@ -35,12 +31,8 @@ def read_pred(path_pred):
 def read_obs(path_Y, remove_unMut):
     
     # Load the CSV file into a DataFrame
-    df = pd.read_csv('../external/BMR/procInput/ann_PCAWG_ID_complement.csv', sep=',')
-
-    filtered_df = df[(df['in_CGC'] | df['in_CGC_literature'] | df['in_CGC_new'] | df['in_oncoKB'] | df['in_pcawg'])]
-        
-    # Select the 'PCAWG_IDs' column from the filtered DataFrame
-    drivers = filtered_df['PCAWG_IDs']
+    df = pd.read_csv('performance/annotated_IDs.csv', sep=',')
+    drivers = df['IDs']
 
     Y_all = read_response(path_Y)
     Y = Y_all.loc[~(Y_all.index).isin(drivers)]

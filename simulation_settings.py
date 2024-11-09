@@ -6,9 +6,7 @@ Created on Tue Jul  4 16:13:00 2023
 @author: Farideh
 """
 import sys
-from models.NN_functions import nn_model_info
 from models.GBM_functions import gbm_model_info
-from models.RF_functions import RF_model_info, RF_GPU_model_info
 
 
 import configparser
@@ -46,27 +44,17 @@ def load_sim_settings(sim_file):
     
     
     settings = {
-        'path_train_info': config_get(sim_config, 'main', 'path_train_info',sim_file),
         'path_X_test': config_get(sim_config, 'main', 'path_X_test',sim_file),
         'path_X_train': config_get(sim_config, 'main', 'path_X_train',sim_file),
         'path_Y_train': config_get(sim_config, 'main', 'path_Y_train',sim_file),
         'path_Y_test': config_get(sim_config, 'main', 'path_Y_test',sim_file),
-        'path_Y_validate': config_get(sim_config, 'main', 'path_Y_validate',sim_file),
-        'path_X_validate': config_get(sim_config, 'main', 'path_X_validate',sim_file),
-        'path_bed_tr': config_get(sim_config, 'main', 'path_bed_tr',sim_file),
-        'path_bed_var': config_get(sim_config, 'main', 'path_bed_var',sim_file),
         'scale': config_get(sim_config, 'main', 'scale',sim_file),
         'models': models,
         'base_dir': config_get(sim_config, 'main', 'base_dir',sim_file),
         'remove_unMutated': config_get(sim_config, 'main', 'remove_unMutated',sim_file),
-        'split_intergenic': config_get(sim_config, 'main', 'split_intergenic',sim_file),
-        'n_sample': int(config_get(sim_config, 'main', 'n_sample',sim_file)),
-        'DSmpl': config_get(sim_config, 'main', 'DSmpl',sim_file),
-        'Nr_pair_acc': int(config_get(sim_config, 'main', 'Nr_pair_acc',sim_file)),
-        'fixed_size_train': config_get(sim_config, 'main', 'fixed_size_train',sim_file)
+        'Nr_pair_acc': int(config_get(sim_config, 'main', 'Nr_pair_acc',sim_file))
     }
     return settings
-
 
 
 def load_sim_settings_perBatchPerf(dir_path, setting_config, param_config):
@@ -92,12 +80,10 @@ def load_sim_settings_perBatchPerf(dir_path, setting_config, param_config):
         'path_X_train': config_get(sim_config, 'main', 'path_X_train',sim_file),
         'path_Y_train': config_get(sim_config, 'main', 'path_Y_train',sim_file),
         'path_Y_test': config_get(sim_config, 'main', 'path_Y_test',sim_file),
-        'path_Y_validate': config_get(sim_config, 'main', 'path_Y_validate',sim_file),
         'scale': config_get(sim_config, 'main', 'scale',sim_file),
         'models': models,
         'base_dir': config_get(sim_config, 'main', 'base_dir',sim_file),
         'remove_unMutated': config_get(sim_config, 'main', 'remove_unMutated',sim_file),
-        'split_intergenic': config_get(sim_config, 'main', 'split_intergenic',sim_file),
         'Nr_pair_acc': int(config_get(sim_config, 'main', 'Nr_pair_acc',sim_file))
         
     }
