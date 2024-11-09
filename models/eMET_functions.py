@@ -13,7 +13,6 @@ from scipy.stats import spearmanr
 from performance.assessModels import assess_model
 from sklearn.metrics import mean_squared_error
 from models.GBM_functions import run_gbm, predict_gbm
-from models.runBMR_functions import  get_features_category
 
 def generate_nonDriver_Dat(X_regLmnt, Y_regLmnt, drivers):
     
