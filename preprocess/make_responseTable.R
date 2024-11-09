@@ -59,19 +59,19 @@ create_response <- function(all_elements, n_donors){
   df <- df[,c('name', 'D_id')]
 
 
-  resTab <- df %>%
-    count(name, D_id) %>%
-    filter(n != 0) %>%
-    group_by(binID = name) %>%
-    summarise(nMut = sum(n), nSample = n(), .groups = "drop")
+  # resTab <- df %>%
+  #   count(name, D_id) %>%
+  #   filter(n != 0) %>%
+  #   group_by(binID = name) %>%
+  #   summarise(nMut = sum(n), nSample = n(), .groups = "drop")
 
-  # # Convert df to a data.table (if it's not already one)
-  # setDT(df)
-  # 
-  # # Create the result table using data.table syntax
-  # resTab <- df[, .N, by = .(name, D_id)][
-  #   N != 0, .(nMut = sum(N), nSample = .N), by = .(binID = name)
-  # ]
+  # Convert df to a data.table (if it's not already one)
+  setDT(df)
+
+  # Create the result table using data.table syntax
+  resTab <- df[, .N, by = .(name, D_id)][
+    N != 0, .(nMut = sum(N), nSample = .N), by = .(binID = name)
+  ]
 
   idx_lenElement <- resTab$binID
   all_lmnt_length <- all_elements$lenAllTests
@@ -99,7 +99,7 @@ save_responseTable <- function(path_to_gr, path_bed, path_out, save_name){
   
   print("Please wait! mutation data is loading...")
   load(path_to_gr)
-  gr <- gr[!duplicated(gr)]
+  # gr <- gr[!duplicated(gr)]
   all_elements <- map_muts(gr, path_bed)
 
   print("************************ mutations mapped to the genomic intervals************************")
