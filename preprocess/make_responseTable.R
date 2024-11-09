@@ -95,8 +95,11 @@ create_response <- function(all_elements, n_donors){
 
 
 
-save_responseTable <- function(gr, path_bed, path_out, save_name){
-
+save_responseTable <- function(path_to_gr, path_bed, path_out, save_name){
+  
+  print("Please wait! mutation data is loading...")
+  load(path_to_gr)
+  gr <- gr[!duplicated(gr)]
   all_elements <- map_muts(gr, path_bed)
 
   print("************************ mutations mapped to the genomic intervals************************")
@@ -110,24 +113,4 @@ save_responseTable <- function(gr, path_bed, path_out, save_name){
          sep = "\t", row.names = F)
   print("************************file saved************************")
 
-}
-
-
-################################################################################
-path_to_gr='../../iDriver/extdata/procInput/mut_PCAWG/pan_cancer_FILTEREDsamples.RData'
-load(path_to_gr)
-gr <- gr[!duplicated(gr)]
-################################################################################
-path_beds <- c('../external/database/bins/proccessed/PCAWG_callable.bed6',
-                 '../external/database/bins/proccessed/callable_intergenic_intervals_wo_pcawg.bed6',
-                 '../external/database/bins/proccessed/intergenic_fixed1M.bed6',
-               '../external/database/bins/proccessed/intergenic_fixed100k.bed6',
-                 '../external/database/bins/proccessed/intergenic_fixed50k.bed6',
-                 '../external/database/bins/proccessed/intergenic_fixed10k.bed6')
-
-path_out <- '../external/BMR/rawInput/responseTabs/'
-save_names = c('reg_elems', 'var_bins', '1M_bins', '100k_bins', '50k_bins', '10k_bins')
-
-for(i in 1:length(path_beds)){
-  save_responseTable(gr, path_beds[i], path_out, save_names[i])
 }
