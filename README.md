@@ -28,7 +28,11 @@ Use any approach provided in prepareInputs.py to generate fixed-size or variable
 #### b.  Make response tables
 
 Create response tables for both functional elements and intergenic intervals. These tables record the observed number of mutations in each genomic interval, the length of each interval (summing lengths if composed of several blocks), the number of donors in the cohort, and the number of mutated samples.
-To create the response table, generate a GRanges object from the somatic mutations with at least one metadata column named D_id for donor IDs. Use make_responseTable.R to save the response tables.
+To create the response table, generate a GRanges object from the somatic mutations with at least one metadata column named D_id for donor IDs.
+
+```bash
+Rscript preprocess/save_responseTable.R <path/to/mutations_granges.RData> <path/to/intervals.bed6> <path/to/save> 'save_name' 
+```
 
 #### c. Generate feature matrix
  Use the [DriverPower](https://github.com/smshuai/DriverPower/tree/master/script/make_features) scripts to generate the feature matrix. It is recommended to save the matrix as a .h5 file.
@@ -38,13 +42,13 @@ To create the response table, generate a GRanges object from the somatic mutatio
 #### a. Train the intergenic XGBoost model
 
 ```bash
-python RUN_BMR.py configs/rate_based/sim_setting.ini
+python RUN_BMR.py configs/sim_setting_intergenic.ini
 ```
 
 #### b. Fine-tune the intergenic model with transfer learning
 
 ```bash
-python run_eMET.py configs/rate_based/sim_setting.ini <path/to/annotated/binIDs.tsv' <path/to/intergenic/pretrainedModel.pkl'> <#bootstraps>
+python run_eMET.py configs/sim_setting_finetunning.ini  <path/to/intergenic/pretrainedModel.pkl'> <#bootstraps>
 ```
 
 ### 4. Run burden test
