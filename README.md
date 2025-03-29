@@ -57,6 +57,13 @@ python run_eMET.py configs/sim_setting_finetunning.ini  <path/to/intergenic/pret
 python run_burdenTest.py <path/to/BMR/directory>
 ```
 
+## Reference
+If you use eMET in your research, please cite:
+
+Bahari, F., Ahangari Cohan, R., & Montazeri, H. (2025). 
+Element-specific estimation of background mutation rates in whole cancer genomes through transfer learning.  
+*NPJ Precision Oncology*. [https://doi.org/10.1038/s41698-025-00871-3](https://doi.org/10.1038/s41698-025-00871-3)
+
 
 ## Contact
 
