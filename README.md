@@ -1,3 +1,6 @@
+<p align="left">
+  <img src="eMETLogo.png" alt="Project Logo" width="200">
+</p>
 # eMET
 **e**lement-specific **M**utation **E**stimator with boosted **T**rees
 
