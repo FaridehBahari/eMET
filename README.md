@@ -2,6 +2,8 @@
   <img src="eMETLogo.png" alt="Project Logo" width="200">
 </p>
 # eMET
+
+
 **e**lement-specific **M**utation **E**stimator with boosted **T**rees
 
 eMET is a tool for building an accurate background mutation rate (BMR) model to help identify cancer drivers in coding and non-coding regions. It uses boosted trees to leverage extensive intergenic data, from somatic point mutations in a tumor cohort, and fine-tunes the model using element-specific information. The process involves building an initial model with intergenic data across a comprehensive set of (epi)genomic features, followed by enhancement through bootstrap samples incorporating element-specific data. Genomic elements with higher-than-expected mutation recurrence than the background suggest positive selection in the cohort and are introduced as candidate driver elements.
