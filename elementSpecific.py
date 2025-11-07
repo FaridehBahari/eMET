@@ -23,6 +23,6 @@ config_save(sim_file)
 
 
 if elems is not None:
-    elemSp(sim_setting, elems=elems, n_bootstrap=n_bootstrap) #elems=["gc19_pc.cds"]
+    elemSp(sim_setting, elems=elems, n_bootstrap=n_bootstrap)
 else:
-    elemSp(sim_setting, n_bootstrap=n_bootstrap)
+    elemSp(sim_setting, elems=["gc19_pc.cds"], n_bootstrap=n_bootstrap)
