@@ -120,7 +120,9 @@ def run_gbm_transferLearning(loaded_model, X_regLmnt, Y_regLmnt, param):
 
 def fit_per_element_bootstrap_gbm(X_regLmnt, Y_regLmnt, drivers, gbm_hyperparams, 
                                  n_bootstrap, path_pretrained_model = None,
-                                 transferlearning = False, save_model = False):
+                                 transferlearning = False, save_model = False, 
+                                 elems = ["gc19_pc.cds", "gc19_pc.ss", "enhancers",
+                                 "gc19_pc.promCore", "gc19_pc.5utr", "gc19_pc.3utr"]):
     
     if transferlearning:
         # Load the pre-trained model on intergenic region
@@ -128,9 +130,7 @@ def fit_per_element_bootstrap_gbm(X_regLmnt, Y_regLmnt, drivers, gbm_hyperparams
             loaded_model = pickle.load(file)
     
     
-    elems = ["gc19_pc.ss", "enhancers",
-             "gc19_pc.cds", "gc19_pc.promCore",
-             "gc19_pc.5utr", "gc19_pc.3utr"] #"lncrna.ncrna", "lncrna.promCore",
+     #"lncrna.ncrna", "lncrna.promCore",
     
     count_non_nans = pd.DataFrame()
     all_elems_ensemble_pred = pd.DataFrame()
@@ -387,3 +387,41 @@ def config_save_eMET(sim_file, change_dir_save = ''):
         shutil.copy(config_file, f'{base_dir+ save_name }/{os.path.basename(config_file)}')
         shutil.copy(sim_file, f'{base_dir+ save_name }/{os.path.basename(sim_file)}')
         
+
+def elemSp(sim_setting, elems,  n_bootstrap = 100):
+    
+    X_regLmnt, Y_regLmnt = load_regulatory_elems(sim_setting)
+    
+    drivers = get_identified_drivers()
+    print(X_regLmnt.shape)
+
+    base_dir = sim_setting['base_dir']
+    models = sim_setting['models']
+    model_name = list(models.keys())[0]
+    m = models[model_name]
+    name = m['save_name']
+    gbm_hyperparams = m['Args']
+    save_path_model = f'{base_dir}/{model_name}/'
+    gbm_hyperparams['path_save'] = f'{save_path_model}models_interval/'
+    Nr_pair_acc = sim_setting['Nr_pair_acc']
+    
+    pred_ensemble_bootstraps, n_runs_per_pred = fit_per_element_bootstrap_gbm(X_regLmnt, Y_regLmnt, drivers, gbm_hyperparams, 
+                                      n_bootstrap, transferlearning = False, elems = elems)
+
+
+    obs_rates = Y_regLmnt.nMut/(Y_regLmnt.length*Y_regLmnt.N)
+    obs_pred_rates = pd.concat([obs_rates, pred_ensemble_bootstraps], axis=1)
+    obs_pred_rates = pd.concat([obs_pred_rates, n_runs_per_pred], axis=1)
+    obs_pred_rates.columns = ['obs_rates', 'predRate', 'n_runs_per_pred']
+    obs_pred_rates['n_runs_per_pred'] = obs_pred_rates['n_runs_per_pred'].fillna(0)
+
+
+    os.makedirs(f'{base_dir}/{model_name}/', exist_ok=True)
+    obs_pred_rates.to_csv(f'{base_dir}/{model_name}/{model_name}_{n_bootstrap}_predTest.tsv', sep = '\t')
+
+
+    #assessment = assess_model(obs_pred_rates.predRate, obs_pred_rates.obs_rates, 
+     #             Nr_pair_acc, model_name, per_element=True)
+
+    #assessment.to_csv(f'{base_dir}/{model_name}/{model_name}_ensemble_bootstraps{n_bootstrap}_assessment.tsv', sep = '\t')
+
